@@ -22,9 +22,8 @@ module.exports = {
         // host: 'localhost',
         port: 8080,
         // proxy:{  // 反向代理 
-        //     "/v": {
-        //         // target:"http://47.102.144.31:1901/",
-        //         target:'http://localhost:1503/',
+        //     "/": {
+        //         target:"http://47.102.144.31:1901/",
         //         changeOrigin: true,
         //     }
         // }

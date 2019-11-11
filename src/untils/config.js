@@ -1,6 +1,5 @@
 const config={
-    // url:"http://localhost:1503",
-    url:"http://mushroom.runfkj.com"
+    url:"http://192.168.0.116:3326/",
 }
 
 export default config

@@ -1,12 +1,16 @@
 <template>
   <div class="home">
     <el-container>
-        <el-aside width="200px">
-          <Menu />
-        </el-aside>
+      <el-aside width="240px">
+        <Menu />
+      </el-aside>       
         <el-container>
-          <el-header>Header</el-header>
-          <el-main>Main</el-main>
+            <el-header>
+              <Header />
+            </el-header>             
+          <el-main>
+            <router-view />
+          </el-main>
         </el-container>
     </el-container>
       
@@ -16,12 +20,13 @@
 <script>
 // @ is an alias to /src
 import Menu from '@/components/menu/menu.vue'
-
+import Header from '@/components/menu/header.vue'
 
 export default {
   name: 'home',
   components: {
-    Menu
+    Menu,
+    Header
   },
   mounted(){
     // console.log(this.$url)
@@ -35,9 +40,20 @@ export default {
 <style lang="less" scoped>
 .el-header{
   line-height: 60px;
-  background: #000000;
-  color: #fff;
+  background: #fff;
 }
-  
- 
+.home{
+  height: 100%;
+}
+  .el-container{
+    height: 100%;
+    width: 100%;
+  }
+  .el-aside{
+    // background: #ccc;    
+    background: #343f51;
+  }
+ .el-main{
+   background: #f1f0f6;
+ }
 </style>

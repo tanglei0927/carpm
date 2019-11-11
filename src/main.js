@@ -4,16 +4,15 @@ import router from './router'
 import store from './store'
 
 
+
+// import Http from './untils/http'
+// Vue.prototype.$http=Http;
 import ajax from '@/untils/axios.js'
 Vue.prototype.$axios=ajax
 
 import config from "@/untils/config.js"
 Vue.prototype.$url=config.url
 // console.log("url"+config.url)
-
-import Http from '@/untils/http.js'
-Vue.prototype.$http=Http
-
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

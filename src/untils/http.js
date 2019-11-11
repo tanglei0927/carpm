@@ -1,10 +1,9 @@
 'use strict'
 
 import axios from 'axios'
-import router from '../router/index'
+import router from '@/router/index'
 import qs from 'qs'
 import { Message } from 'element-ui'
-import store from '../store/index'
 
 const devUrl ='http://mushroom.runfkj.com' 
 //'http://47.94.37.25:3325'
@@ -20,6 +19,8 @@ axios.interceptors.request.use(config => {
   if (store.state.userInfo && store.state.userInfo.token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
     config.headers.Authorization = store.state.userInfo.token;
     config.headers.common['User-Token']= config.headers.Authorization
+    console.log("Token")
+    console.log(config.headers.Authorization)
   }
   return config
 }, error => {
@@ -61,6 +62,7 @@ function checkStatus (response,lock) {
     return response.data
     // 如果不需要除了data之外的数据，可以直接 return response.data
   }else if (response.status === 500 ){
+    console.log("500")
   }
   else {
     if(lock){ // 是否提示 true不显示，false 显示
