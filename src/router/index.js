@@ -41,6 +41,11 @@ const routes = [
         ]
       },
       {
+        path:"/updatecar",
+        name:"updatecar",
+        component:()=>import('@/views/car/updatecar.vue')
+      },
+      {
         path:'/user',
         name:'user',
         component:()=> import('@/views/user/user.vue')
