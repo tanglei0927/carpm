@@ -25,4 +25,31 @@ input{
 
 /* html{font-size: calc(100vw/7.5);}
 body{font-size: .24rem;} */
+html,body{
+	height:100%;
+}
 
+/* 公共样式 */
+.title{
+	height: 50px;
+}
+.title p{
+	height: 20px;
+	float: left;
+	border-left: 4px solid #3e6fd6;
+	padding-left: 10px;
+	font-weight: bold;
+}
+.xzboxs{
+	box-shadow: -2px 2px 8px -6px ;  
+	height: 600px;
+	background: #fff;
+}
+.xzboxs h3{
+	text-align: left;
+	font-size: 14px;
+	padding:0 20px;
+	line-height: 60px;
+	background: #ecebf1;
+	border: 1px solid #dddce1;
+}

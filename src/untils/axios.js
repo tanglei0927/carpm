@@ -1,7 +1,8 @@
 import axios from "axios";
-
+import qs from 'qs'
 import router from "../router"
-
+const devUrl ='http://192.168.0.116:3326/' 
+import { Message } from 'element-ui'
 
 let token="";
 axios.defaults.withCredentials = false;
@@ -44,10 +45,7 @@ axios.interceptors.response.use(function (response) {
     // }   
     if(response.data.code =="300"){
         // 未登录，请重新登录 
-        this.$message({
-          message: '未登录，请重新登录',
-          type: 'error'
-        });
+        Message.warning('未登录，请重新登录')
         
       setTimeout(()=>{
         router.push({name:'login'});
@@ -56,15 +54,10 @@ axios.interceptors.response.use(function (response) {
     }
 
     if (response.data.code==500) {
-      this.$message({
-        message: response.data.msg,
-        type: 'warning'
-      });
+      Message.warning(response.data.msg)
+    
     }else if (response.data.code==400 )   {
-      this.$message({
-        message: '登录过期，请重新登录',
-        type: 'warning'
-      });
+      Message.warning('登录过期，请重新登录')
       setTimeout(function () {
         router.replace({
           path: '/login'     // 到登录页重新获取token
@@ -76,10 +69,8 @@ axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
     // Toast({message:"未知错误-res",duration:500})
-    this.$message({
-      message: '网络异常，请重新登录',
-      type: 'error'
-    });
+    Message.warning('网络异常，请重新登录')
+
     setTimeout(()=>{
       router.push({name:'login'});
     },3000)
@@ -89,4 +80,23 @@ axios.interceptors.response.use(function (response) {
 
 
 
-export default axios;
+export default {
+  post (url, params,lock,baseurl) {
+    // params.memberId =store.state.userInfo.memberId
+    return axios({
+      method: 'post',
+      baseURL: baseurl,
+      url:url,
+      data: qs.stringify(params),
+      timeout: 3000000000,
+      headers: {
+        'Accept' : 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    }).then(function (res) {
+        // return checkStatus(res,lock)
+        console.log(res);
+      }
+    )
+  },
+};

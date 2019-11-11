@@ -1,26 +1,109 @@
 <template>
-   <div class="formbox">
-    <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="用户名">
-            <el-input v-model="form.username"></el-input>
-        </el-form-item>
-    </el-form>
-    </div> 
+<div class="login">
+
+    <div>
+          <h3></h3>
+            <div class="formbox">
+                <h5>用户登录</h5>
+                <el-form label-width="80px">
+                     <el-input
+                        placeholder="请输入用户名"
+                        prefix-icon="el-icon-user-solid"
+                        v-model="username">
+                    </el-input>
+                     <el-input
+                        placeholder="请输入登录密码"
+                        prefix-icon="el-icon-lock"
+                        v-model="password" type="password">
+                    </el-input>
+                    <el-button type="primary" @click="login()">登录</el-button>
+                </el-form>
+            </div> 
+    </div>
+  
+</div>
 </template>
 <script>
 export default {
     data(){
         return{
-            form:{
-              username:''  
-            }
+              username:'',
+              password:''
         }
     },
+    methods:{
+        login(){
+            var that=this
+            console.log(this.$url)
+            console.log(this.username)
+            // if(this.username!=""&&this.password!=""){
+                that.$axios.post(that.$url+"accountLogin/nameLogin",
+                {
+                    userName:that.username,
+                    password:that.password
+                }).then(res=>{
+                    console.log(res)
+                })
+            // }
+        }
+    }
 }
 </script>
 <style lang="less" scoped>
+    .login{
+        width: 100%;
+        height: 100%;
+        background: url("../assets/dl_05.jpg") center center no-repeat;
+        background-size: 100% 100%;
+        
+    }
     .formbox{
-        width: 300px;
+        width: 448px;
+        height: 390px;
         padding: 50px;
+        background: #fff;
+        border-radius: 10px;
+        padding: 43px;
+        box-sizing: border-box;
+        // button{
+        //     margin: 0;
+        //     padding: 0;
+        //     border: 0;
+        //     background:url("../assets/dl_06.png") center center no-repeat;
+        //     background-size:100% 100%; 
+        //     width: 100%;
+        //     line-height: 60px;
+        //     height: 60px;
+        //     border-radius:3px; 
+        //     color: #fff;
+        //     font-size: 16px;
+        // }
+    }
+    h3{
+        width: 250px; 
+        height: 40px;
+        background: url("../assets/logo.png") center center no-repeat;
+        margin: auto;
+        margin-bottom: 40px;
+    }
+    .login>div{
+        position: absolute;
+        top:30%;
+        right: 10%;
+    }
+    h5{
+        font-size: 20px;
+        font-weight: normal;
+        text-align: left;
+        line-height: 36px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid #dddce2;
+    }
+    .el-form{
+        margin-top: 30px;
+    }
+    
+    .el-input{
+        margin-bottom: 30px;
     }
 </style>

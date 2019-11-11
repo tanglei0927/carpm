@@ -8,7 +8,44 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    children:[
+      {
+        path:'/',
+        name:'car',
+        component:()=> import('@/views/car/car.vue')
+      },
+      {
+        path:'/addcar',
+        name:'addcar',
+        component:()=> import('@/views/car/addcar.vue'),
+        children:[
+          {
+            path:"/addcarfl",
+            name:'addcarfl',
+            component:()=>import('@/views/car/addcarfl.vue')
+          },
+          {
+            path:"/addcz",
+            name:'addcz',
+            component:()=>import('@/views/car/addcz.vue')
+          }, {
+            path:"/addcjinfo",
+            name:'addcjinfo',
+            component:()=>import('@/views/car/addcjinfo.vue')
+          }, {
+            path:"/addyaos",
+            name:'addyaos',
+            component:()=>import('@/views/car/addyaos.vue')
+          },
+        ]
+      },
+      {
+        path:'/user',
+        name:'user',
+        component:()=> import('@/views/user/user.vue')
+      }
+    ]
   },
   {
     path: '/about',

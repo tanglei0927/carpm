@@ -1,7 +1,9 @@
 <template>
-    <header>
-        HEADER
-    </header>
+        <ul>
+            <li>
+                <i></i>
+            </li>
+        </ul>
 </template>
 <script>
 export default {
@@ -10,4 +12,7 @@ export default {
 </script>
 <style lang="less" scoped>
 
+    ul{
+        float: right;
+    }
 </style>

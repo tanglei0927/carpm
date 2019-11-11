@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 
 
+
+// import Http from './untils/http'
+// Vue.prototype.$http=Http;
 import ajax from '@/untils/axios.js'
 Vue.prototype.$axios=ajax
 
