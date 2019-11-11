@@ -11,6 +11,10 @@ import config from "@/untils/config.js"
 Vue.prototype.$url=config.url
 // console.log("url"+config.url)
 
+import Http from '@/untils/http.js'
+Vue.prototype.$http=Http
+
+
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
