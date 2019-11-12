@@ -45,11 +45,16 @@ export default {
         gochejiaInfo(){
             this.$axios.post(this.$url+"accountCar/testRe",{type:1,text:this.cjNum}).then(res=>{
                 console.log(res)
-                if(res.code==300){
-                    // sessionStorage.cjNum=this.cjNum
-                    // setTimeout(()=>{
-                    //     this.$router.push({name:"addyaos"})
-                    // },500)
+                if(res.code==100){
+                    sessionStorage.cjNum=this.cjNum
+                    setTimeout(()=>{
+                        this.$router.push({name:"addyaos"})
+                    },500)
+                }else{
+                     this.$message({
+                        message: res.msg,
+                        type: 'warning'
+                    });
                 }
             })
 

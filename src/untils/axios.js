@@ -14,14 +14,15 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';/
 //  添加一个请求拦截器  request 
 axios.interceptors.request.use(function (config) {
     //获取存储的token，判断是否有存储的token   每次做请求的时候带过header 去后台对比判断token===》checklogin
-    let userInfo = window.sessionStorage.userinfo;
+    let userInfo = window.sessionStorage.userInfo;
     // console.log("token:")
     // console.log(window.localStorage.userinfo)
+    // conso
     if(userInfo){
         // userInfo = JSON.parse(userInfo);
-        token = userInfo;
+        token =JSON.parse(userInfo);
     }
-    config.headers.common['User-Token'] = token;
+    config.headers.common['User-Token'] = token.token;
     
     // Toast.loading({
     //   mask: true,
@@ -43,13 +44,13 @@ axios.interceptors.response.use(function (response) {
     // if(!!response.data.msg){
     //   Toast({message:response.data.msg,duration:500});
     // }   
-    if(response.data.code =="300"){
+    if(response.data.code ==300){
         // 未登录，请重新登录 
         Message.warning('未登录，请重新登录')
         
-      setTimeout(()=>{
+      // setTimeout(()=>{
         router.push({name:'login'});
-      },2000)
+      // },2000)
        
     }
 
@@ -58,14 +59,12 @@ axios.interceptors.response.use(function (response) {
     
     }else if (response.data.code==400 )   {
       Message.warning('登录过期，请重新登录')
-      setTimeout(function () {
+      // setTimeout(function () {
         router.replace({
           path: '/login'     // 到登录页重新获取token
         })
-      },2000)
+      // },500)
     }
-
-
     return response;
   }, function (error) {
     // Toast({message:"未知错误-res",duration:500})
@@ -76,6 +75,29 @@ axios.interceptors.response.use(function (response) {
     },3000)
     return Promise.reject(error.response);
   })
+
+
+  function checkStatus (response,lock) {
+    // loading
+    // 如果http状态码正常，则直接返回数据
+    if (response && (response.status === 200 || response.status === 304 || response.status === 400)) {
+      return response.data
+      // 如果不需要除了data之外的数据，可以直接 return response.data
+    }else if (response.status === 500 ){
+      console.log("500")
+    }
+    else {
+      if(lock){ // 是否提示 true不显示，false 显示
+        alert('网络异常')
+      }
+      return response
+    }
+    // 异常状态下，把错误信息返回去
+    // return {
+    //   status: -404,
+    //   msg: '网络异常'
+    // }
+  }
 
 
 
@@ -94,8 +116,22 @@ export default {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
       }
     }).then(function (res) {
-        // return checkStatus(res,lock)
+        return checkStatus(res,lock)
         console.log(res);
+      }
+    )
+  },
+  postImg (url, params,lock,baseurl,header) {
+    return axios({
+      method: 'post',
+      baseURL: baseurl,
+      url:url,
+      data: params,
+      timeout: 300000000000000,
+      headers: header
+    }).then(function (res) {
+      console.log("上传图片")
+        return checkStatus(res,lock)
       }
     )
   },

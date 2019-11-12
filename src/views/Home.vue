@@ -34,6 +34,11 @@ export default {
     //       message: '恭喜你，这是一条成功消息',
     //       type: 'success'
     //     });
+  },
+  created(){
+    if(!sessionStorage.userInfo){
+        this.$router.push({name:'login'})
+    }
   }
 }
 </script>

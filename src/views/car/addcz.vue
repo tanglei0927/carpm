@@ -21,18 +21,14 @@
                 </div>
                  <div class="demo-input-suffix">
                     <em>*</em> 车辆照片：
-                    <el-upload
-                        class="upload-demo"
+                     <el-upload
                         :action="$url+'/file/uploadFile'"
-                        :on-preview="handlePreview"
+                        :limit="5"
+                        list-type="picture-card"
+                        :name="'fileName'"
                         :on-remove="handleRemove"
-                        :before-remove="beforeRemove"
-                        multiple
-                        :limit="3"
-                        :on-exceed="handleExceed"
-                        :file-list="fileList">
-                        <el-button size="small" type="primary">点击上传</el-button>
-                        <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+                        :on-success="handlePictureCardPreviewBanner">
+                        <i class="el-icon-plus"></i>
                     </el-upload>
                 </div>
             </div>
@@ -62,6 +58,11 @@ export default {
         Title
     },
     methods:{
+        handlePictureCardPreviewBanner(res){
+            console.log("文件")
+            console.log(res)
+            this.carImageCode=res.info
+        },
            handleRemove(file, fileList) {
         console.log(file, fileList);
       },
@@ -79,19 +80,42 @@ export default {
       },
       tijiao(){
         //   this.$axios.post("accountCar/updateCar")
+        console.log("提交")
         var data={}
         data.fsetId=sessionStorage.CxValue //车系id
         data.setName=sessionStorage.CxName //车系
         data.fmodelId= sessionStorage.xHValue  //车型id
         data.modelName=sessionStorage.xHName//车型
         data.frameName=sessionStorage.cjNum//车架
-        data.keyName=sessionStorage.seyaoshiInfo//钥匙
+        data.keyName=sessionStorage.yaoshiInfo//钥匙
         data.masterName=this.username
         data.masterPhone=this.phone
         data.carImageCode=this.carImageCode
-            this.$axios(this.$url+"accountCar/updateCar",data).then(res=>{
+        if(!(/^1[3456789]\d{9}$/.test(this.phone))){
+            this.$message({
+                message:'请输入正确的手机号码',
+                type: 'warning'
+            });
+        }else{            
+            this.$axios.post(this.$url+"accountCar/updateCar",data).then(res=>{
                 console.log(res)
+                if(res.code==100){
+                    this.$message.success('添加成功')
+                    var userInfo=sessionStorage.userInfo
+                    sessionStorage.clear()
+                    sessionStorage.userInfo=userInfo
+                    setTimeout(()=>{
+                        this.$router.push({name:'car'})
+                    },2000)
+                }else{
+                        this.$message({
+                        message: res.msg,
+                        type: 'warning'
+                    });
+                }
             })
+        
+        }
       }
     }
 }

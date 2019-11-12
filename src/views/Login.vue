@@ -16,7 +16,7 @@
                         prefix-icon="el-icon-lock"
                         v-model="password" type="password">
                     </el-input>
-                    <el-button type="primary" @click="login()">登录</el-button>
+                    <el-button :type="buttonType" @click="login()" :disabled="disabled" :loading="disabled">{{msg}}</el-button>
                 </el-form>
             </div> 
     </div>
@@ -24,15 +24,23 @@
 </div>
 </template>
 <script>
+  import md5 from 'js-md5';
+import { stringify } from 'querystring';
 export default {
     data(){
         return{
               username:'',
-              password:''
+              password:'',
+              buttonType:'primary',
+              msg:'登录',
+              disabled:false
         }
     },
     methods:{
         login(){
+            this.disabled=true
+            this.buttonType='warning'
+            this.msg="登录中"
             var that=this
             console.log(this.$url)
             console.log(this.username)
@@ -40,9 +48,16 @@ export default {
                 that.$axios.post(that.$url+"accountLogin/nameLogin",
                 {
                     userName:that.username,
-                    password:that.password
+                    password:md5(that.password)
                 }).then(res=>{
+                    console.log("res")
                     console.log(res)
+                    if(res.code==100){
+                        sessionStorage.userInfo=JSON.stringify(res.info)
+                        setTimeout(()=>{
+                            this.$router.push({name:'car'})
+                        },1000)
+                    }
                 })
             // }
         }
@@ -102,7 +117,9 @@ export default {
     .el-form{
         margin-top: 30px;
     }
-    
+    .el-button{
+        width: 150px;
+    }
     .el-input{
         margin-bottom: 30px;
     }

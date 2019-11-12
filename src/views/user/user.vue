@@ -8,15 +8,28 @@
             <div class="userInfo">
                 <div>                            
                     <el-form ref="form"  label-width="80px">
+                         <!-- <el-form-item label="用户头像"> -->
+                                <!-- <img :src="imgurl" alt=""> -->
+                                 <!-- <el-upload
+                                    :action="$url+'/file/uploadFile'"
+                                    :limit="5"
+                                    list-type="picture-card"
+                                    :file-list="fileList"
+                                    :name="'fileName'"
+                                    :on-remove="handleRemove"
+                                    :on-success="handlePictureCardPreviewBanner">
+                                    <i class="el-icon-plus"></i>
+                                </el-upload> -->
+                            <!-- </el-form-item> -->
                             <el-form-item label="用户名">
-                                <el-input v-model="username"></el-input>
+                                <el-input v-model="username" disabled="true"></el-input>
                             </el-form-item>
-                            <el-form-item label="Email">
+                            <!-- <el-form-item label="Email">
                                 <el-input v-model="Email"></el-input>
-                            </el-form-item>
-                            <el-form-item label="旧密码">
+                            </el-form-item> -->
+                            <!-- <el-form-item label="旧密码">
                                 <el-input v-model="pwd" type="password" placeholder="请填写旧密码"></el-input>
-                            </el-form-item>
+                            </el-form-item> -->
                             <el-form-item label="新密码">
                                 <el-input v-model="newpwd" type="password" placeholder="请填写新密码"></el-input>
                             </el-form-item>
@@ -26,7 +39,7 @@
                     </el-form>                
                 </div>
                 <div class="button">
-                    <el-button type="primary">完成，提交信息</el-button>
+                    <el-button type="primary" @click="changepwd()">确认修改</el-button>
                 </div>
             </div>
         </div>
@@ -40,7 +53,45 @@ export default {
             Email:'',
             pwd:'',
             newpwd:'',
-            newpwd2:''
+            newpwd2:'',
+            id:null
+        }
+    },
+    created(){
+        var userInfo=JSON.parse(sessionStorage.userInfo)
+        this.username=userInfo.name
+        this.id=userInfo.id    
+        this.newpwd=''    
+    },
+    methods:{
+        changepwd(){
+            if(this.newpwd!=''&&this.newpwd2!=''){
+                if(this.newpwd==this.newpwd2){
+                    this.$axios.post(this.$url+"accountLogin/password",{
+                        password:this.newpwd2
+                    }).then(res=>{
+                        if(res.code==100){
+                             this.$message({
+                                message: '密码修改成功',
+                                type: 'success'
+                            });
+                            setTimeout(()=>{
+                                this.$router.push({name:'car'})
+                            },1000)
+                        }else{
+                             this.$message({
+                                message: res.msg,
+                                type: 'warning'
+                            });
+                        }
+                    })
+                }else{
+                    this.$message({
+                        message: '两次密码不一致',
+                        type: 'warning'
+                    });
+                }
+            }
         }
     }
 }
@@ -63,7 +114,7 @@ export default {
        
         width: 438px;
         margin: auto;
-        height: 400px;
+        // height: 400px;
        .el-input{
             width: 300px;
         }

@@ -20,7 +20,7 @@
                     <img src="@/assets/sy_11.png" alt="">
                 </i>
             </li>
-             <li>
+             <li @click="gohome()">
                 <i>
                     <img src="@/assets/sy_12.png" alt="">
                 </i>
@@ -29,7 +29,12 @@
 </template>
 <script>
 export default {
-    
+    methods:{
+        gohome(){
+            sessionStorage.clear()
+            this.$router.push({name:'login'})
+        }
+    }
 }
 </script>
 <style lang="less" scoped>

@@ -19,7 +19,7 @@ module.exports = {
       },
       devServer: {
         open: true,   // 自动打开浏览器
-        // host: 'localhost',
+        host: '0.0.0.0',
         port: 8080,
         // proxy:{  // 反向代理 
         //     "/": {

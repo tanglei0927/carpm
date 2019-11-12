@@ -8,7 +8,15 @@
     <router-view/>
   </div>
 </template>
-
+<script>
+export default {
+  created(){
+    if(!sessionStorage.userInfo){
+        this.$router.push({name:'login'})
+    }
+  }
+}
+</script>
 <style lang="less">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

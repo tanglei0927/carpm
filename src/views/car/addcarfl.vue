@@ -44,33 +44,7 @@ export default {
             cxingStr:"",//车型
             cxnumList:[],
             cxflList:[
-                {
-                    value:1,
-                    name:'WEY VV5',
-                    list:[
-                        {
-                            value:1,
-                            name:'2019款2.0T两驱豪华型 国6'
-                        },
-                         {
-                            value:2,
-                            name:'2019款2.0T两驱豪华型 国6'
-                        }
-                    ]
-                },{
-                    value:2,
-                    name:'WEY VV6',
-                    list:[
-                        {
-                            value:1,
-                            name:'2019款2.0T两驱豪华型 国611'
-                        },
-                         {
-                            value:2,
-                            name:'2019款2.0T两驱豪华型 国622'
-                        }
-                    ]
-                }
+                
             ]
         }
     },
@@ -101,6 +75,7 @@ export default {
         }
     },
     created(){
+        this.cxflList=this.$store.state.cxflList
         if(sessionStorage.CxValue){  
             var index=(sessionStorage.CxValue)-1
            this.cxiNum=sessionStorage.CxValue

@@ -6,7 +6,7 @@
             <div class="infobox">
              
                   <label for="">请填写车钥匙信息:
-                        <input type="text" v-model="yaoshi" placeholder="请填写车架号">
+                        <input type="text" v-model="yaoshi" placeholder="请填写钥匙信息">
                     </label>
                 <div style="padding:20px 0;border-bottom:1px solid #dddce1;margin-bottom:40px;">您当前选择的车钥匙是: <span style="color:red;">{{yaoshi}}</span> </div>
                
@@ -37,11 +37,16 @@ export default {
            
             this.$axios.post(this.$url+"accountCar/testRe",{type:2,text:this.yaoshi}).then(res=>{
                 console.log(res)
-                if(res.code==300){ 
-                    // sessionStorage.yaoshiInfo=this.yaoshi
-                    // setTimeout(()=>{
-                    //      this.$router.push({name:"addcz"})
-                    // },500)
+                if(res.code==100){ 
+                    sessionStorage.yaoshiInfo=this.yaoshi
+                    setTimeout(()=>{
+                         this.$router.push({name:"addcz"})
+                    },500)
+                }else{
+                     this.$message({
+                        message: res.msg,
+                        type: 'warning'
+                    });
                 }
             })
         }

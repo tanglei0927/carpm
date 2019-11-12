@@ -42,7 +42,7 @@
   export default {
     data(){
       return{
-        imgurl:"",
+        imgurl:require('@/assets/bjtit.png'),
         checked:'',
       }
     },
@@ -90,7 +90,7 @@ h5{
     height: 106px;
     width: 106px;
     border-radius:50%; 
-    background: #3b70d6;
+    background: #fff;
     margin: auto;
     margin-top: 50px;
     overflow: hidden;
